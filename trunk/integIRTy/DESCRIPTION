@@ -1,0 +1,17 @@
+Package: integIRTy
+Type: Package
+Title: Integrating Multiple Modalities of High Throughput Assays Using
+  Item Response Theory 
+Version: 0.9.4
+Date: 2012-06-04
+Author: Pan Tong, Kevin R Coombes
+Maintainer: Pan Tong <nickytong@gmail.com>
+Description: This package provides a systematic framework for
+ integrating multiple modalities of assays profiled on the same set of
+ samples. The goal is to identify genes that are altered in cancer
+ either marginally or consistently across different assays. The
+ heterogeneity among different platforms and different samples are
+ automatically adjusted so that the overall alteration magnitude can
+ be accurately inferred.
+License: GPL (>= 2)
+Depends: ltm, foreach, doSNOW, mclust, MASS, abind

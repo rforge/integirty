@@ -1,0 +1,12 @@
+export(fitOnSinglePlat,
+computeAbility,
+intIRTeasyRun,
+calculatePermutedScoreByGeneSampling,
+simulateBinaryResponseMat,
+dichotomize,
+dichotomizeExpr,
+dichotomizeMethy,
+dichotomizeCN,
+intIRTeasyRunFromRaw
+)
+
