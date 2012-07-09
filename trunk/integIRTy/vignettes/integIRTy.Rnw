@@ -139,7 +139,7 @@ elements:
   after permuting the binary matrix within columns. This is only
   available if addPermutedScore is set to TRUE. The first several
   columns correspond to the individual assays; the last column
-  represents the integrated data.
+  represents the integrated data. 
 \item \texttt{dscrmnList}: A list of discrimination parameters. Each
     element contains all of the discrimination parameters as a vector
     for each assay. The last element contains the discrimination
@@ -149,6 +149,11 @@ elements:
     contains difficulty parameter.
   \item \texttt{gussngList}: Same format as dscrmnList except it
     contains guessing parameter. Be default, this is just all 0's.
+\item \texttt{permutedScoreMatWithLabelPerm}: A matrix of latent trait 
+	estimates using sample label permutation. This is only available if
+	permutationMethod=`sample label permutation' is used. The first several 
+	columns correspond to the individual assays; the last column represents 
+	the integrated data.
 \end{itemize}
 
 Below, we just extract the estimated latent traits for each assay and
