@@ -69,8 +69,8 @@ intIRTeasyRun <-
 	}
 	# returns integrated latent trait and ltm fit on individual platform					
 	if(addPermutedScore==TRUE){
-		return(list(fits=fits, estimatedScoreMat=estimatedScoreMat, permutedScoreMat=permutedScoreMat))
+		return(list(fits=fits, estimatedScoreMat=estimatedScoreMat, permutedScoreMat=permutedScoreMat, dscrmnList=a_list, dffcltList=b_list, gussngList=c_list))
 	} else {
-		return(list(fits=fits, estimatedScoreMat=estimatedScoreMat))
+		return(list(fits=fits, estimatedScoreMat=estimatedScoreMat, dscrmnList=a_list, dffcltList=b_list, gussngList=c_list))
 	}
 }
