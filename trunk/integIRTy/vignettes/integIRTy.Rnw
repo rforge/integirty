@@ -116,11 +116,21 @@ if(!testObject(runFromRaw)) {
 class(runFromRaw)
 attributes(runFromRaw)
 @ 
-
+	
 \texttt{intIRTeasyRunFromRaw} returns a list of the following
 elements:
 \begin{itemize}
-\item\textit{KRC: These need consistent,sensible names!}.
+\item \texttt{fits}: a list of model fits for each platform as returned by
+  \texttt{fitOnSinglePlat} function; specifically, these include
+  \begin{itemize}
+  \item \texttt{fit}: An object returned by calling ltm package. Item parameters and 
+  other auxillary inforamtion (i.e. loglikelihood, convergence, Hessian) can be accessed 
+  from this object. For more details, please refer to ltm package	
+  \item \texttt{model}: The model type
+  \item \texttt{guessing}: The guessing parameter
+  \item \texttt{sampleIndices}: The sample indices used in the model
+  \item \texttt{geneIndices}: The gene indices used in the model   
+  \end{itemize}
 \item \texttt{estimatedScoreMat}: A matrix of estimated latent
   traits. The first several columns correspond to the individual
   assays; the last column represents the integrated latent trait with
@@ -130,24 +140,15 @@ elements:
   available if addPermutedScore is set to TRUE. The first several
   columns correspond to the individual assays; the last column
   represents the integrated data.
-\item \texttt{fits}: Model fits for each platform as returned by
-  \texttt{fitOnSinglePlat} function; specifically, these include
-  \begin{itemize}
-  \item \texttt{dscrmnList}: A list of discrimination parameters. Each
+\item \texttt{dscrmnList}: A list of discrimination parameters. Each
     element contains all of the discrimination parameters as a vector
     for each assay. The last element contains the discrimination
     parameters for the integrated data which is formed by combining
     discrimination parameters from each assay sequentially.
   \item \texttt{dffcltList}: Same format as dscrmnList except it
     contains difficulty parameter.
-  \item \texttt{guessing}: Same format as dscrmnList except it
+  \item \texttt{gussngList}: Same format as dscrmnList except it
     contains guessing parameter. Be default, this is just all 0's.
-  \item \texttt{permutedScoreMatWithLabelPerm}: A matrix of latent trait
-    estimates using sample label permutation.  This is only available if
-    permutationMethod=`sample label permutation' is used. The first
-    several columns correspond to the individual assays; the last column
-    represents the integrated data.
-  \end{itemize}
 \end{itemize}
 
 Below, we just extract the estimated latent traits for each assay and
@@ -303,9 +304,10 @@ Several cluster types can be requested including MPI, SOCK, PVM and
 NWS. For example, on a windows machine with multiple cores, the
 following code requests 3 workers through SOCK:
 
-<<eval=FALSE>>=
+<<>>=
 library(doSNOW)
-registerDoSNOW(makeCluster(3, type = "SOCK"))
+cl <- makeCluster(3, type = "SOCK")
+registerDoSNOW(cl)
 @ 
 
 Note that the above command also works on Linux servers. However, it
@@ -325,11 +327,17 @@ using the R script written without further modification.
 We proceed with the 3 nodes requested and call the intIRTeasyRun() to
 illustrate how to use the parallel computing:
 
-<<parallelExample,eval=FALSE>>=
+<<parallelExample>>=
 runFromBinary <- intIRTeasyRun(platforms=list(binDat_expr, binDat_methy, binDat_CN),
 	addPermutedScore=TRUE, parallel=TRUE)
 
 @ 
+
+Now we close the connection to the workers.
+
+<<>>=
+stopCluster(cl)
+@
 
 
 \section{File Location and Session Info}
