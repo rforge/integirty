@@ -280,12 +280,13 @@ all(score_integrated==runFromRaw_ScoreMat[, 4])
 
 \subsection{The intIRTeasyRun() Function}
 The intIRTeasyRun() function is a pipeline for binary input.  It can
-be used as following:
+be used as follows:
 
-\begin{verbatim}
+<<easy,eval=FALSE>>=
+# not run to allow vignette to complete more quickly
 runFromBinary <- intIRTeasyRun(platforms=list(binDat_expr, 
                                  binDat_methy, binDat_CN))
-\end{verbatim}
+@ 
 
 \section{Parallelizing \texttt{integIRTy}}
 We add an option for parallel computing to speed up the computation.
@@ -294,6 +295,14 @@ are requested by \texttt{doSNOW}.  The parallelism can happen when
 fitting serveral IRT models (due to multiple assay types to integrate)
 or estimating the latent traits or performing permutation to assess
 statistical significance.
+
+Note that, although the parallel code works fine on Windows after the
+program is installed, it causes an error when checking the package on
+Windows.  As a result, we disable this section of te code if running
+on Windows.
+<<notWin>>=
+notwin <- .Platform$OS != "windows"
+@ 
 
 The following functions can be paralleled which can be controlled by
 the \textit{parallel} option: intIRTeasyRun(), intIRTeasyRunFromRaw(),
@@ -310,9 +319,11 @@ NWS. For example, on a windows machine with multiple cores, the
 following code requests 3 workers through SOCK:
 
 <<>>=
-library(doSNOW)
-cl <- makeCluster(3, type = "SOCK")
-registerDoSNOW(cl)
+if(notwin) {
+    library(doSNOW)
+    cl <- makeCluster(3, type = "SOCK")
+    registerDoSNOW(cl)
+    }
 @ 
 
 Note that the above command also works on Linux servers. However, it
@@ -321,9 +332,10 @@ requests master nodes when run within R.
 For Linux servers, especially linux clusters with MPI installed, we
 can request more workers as:
 
-\begin{verbatim}
+<<register,eval=FALSE>>=
+# not run to allow vignette to complete more quickly
 registerDoSNOW(makeCluster(30, type = "MPI"))
-\end{verbatim}
+@ 
 
 Usually it's not a good practice to request the master nodes on the
 cluster. To avoid this, one can use qsub command to submit a PBS job
@@ -333,15 +345,19 @@ We proceed with the 3 nodes requested and call the intIRTeasyRun() to
 illustrate how to use the parallel computing:
 
 <<parallelExample>>=
-runFromBinary <- intIRTeasyRun(platforms=list(binDat_expr, binDat_methy, binDat_CN),
-	addPermutedScore=TRUE, parallel=TRUE)
-
+if(notwin) {
+    runFromBinary <- intIRTeasyRun(platforms=list(binDat_expr, 
+                                       binDat_methy, binDat_CN),
+                                   addPermutedScore=TRUE, parallel=TRUE)
+}
 @ 
 
 Now we close the connection to the workers.
 
 <<>>=
-stopCluster(cl)
+if(notwin) {
+    stopCluster(cl)
+    }
 @
 
 
