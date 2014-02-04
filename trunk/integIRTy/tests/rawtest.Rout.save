@@ -1,8 +1,7 @@
 
-R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
-Copyright (C) 2012 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-pc-mingw32/x64 (64-bit)
+R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
@@ -20,29 +19,18 @@ Type 'q()' to quit R.
 Loading required package: ltm
 Loading required package: MASS
 Loading required package: msm
-Loading required package: mvtnorm
 Loading required package: polycor
+Loading required package: mvtnorm
 Loading required package: sfsmisc
-
-This is package 'ltm' version '0.9-7'
-
 Loading required package: foreach
-Loading required package: mclust
-by using mclust, invoked on its own or through another package,
-you accept the license agreement in the mclust LICENSE file
-and at http://www.stat.washington.edu/mclust/license.txt
-
-
-Loading required package: abind
+Loading required package: doSNOW
+Loading required package: iterators
+Loading required package: snow
 > data(OV)
 > ll <- list(CN_N, Expr_N, Methy_N)
 > pp <- list(CN_T, Expr_T, Methy_T)
-> whatever <- intIRTeasyRunFromRaw(pp, ll, assayType=c("CN", "Expr", "Methy"))
-Performing data dichtomization for each platform 
-Performing easyRun on dichtomized data 
-Performing ltm fit for each platform 
-Performing latent trait estimation for each platform 
+> #whatever <- intIRTeasyRunFromRaw(pp, ll, assayType=c("CN", "Expr", "Methy"))
 > 
 > proc.time()
    user  system elapsed 
-  17.06    0.09   17.14 
+   2.37    0.04    2.40 

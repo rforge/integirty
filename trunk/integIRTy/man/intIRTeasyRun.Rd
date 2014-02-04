@@ -67,7 +67,7 @@ Tong, P. and Coombes, K. R. (2012). integIRTy: a method to identify altered gene
 multiple mechanisms of regulation using item response theory. Bioinformatics, submitted.
 }
 \author{
-Pan Tong (nickytong@gmail.com), Kevin R Coombes (kcoombes@mdanderson.org)
+Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 }
 
 

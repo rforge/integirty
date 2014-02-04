@@ -40,7 +40,7 @@ David Magis, Gilles Raiche (2012). Random Generation of Response Patterns under 
 R Package catR. Journal of Statistical Software, 48(8), 1-31. URL http://www.jstatsoft.org/v48/i08/.
 }
 \author{
-Pan Tong (nickytong@gmail.com), Kevin R Coombes (kcoombes@mdanderson.org)
+Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 }
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 

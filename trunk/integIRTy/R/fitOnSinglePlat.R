@@ -8,7 +8,7 @@ function(data, model=2, guessing=FALSE,
 	## if guessing=T, then max.guessing=1 is used to fit the guessing parameter for every item
 	#K <- length(sampleIndices) # item size
 	if(is.null(sampleIndices)) sampleIndices=1:ncol(data)
-	if(is.null(geneIndices)) sampleIndices=1:nrow(data)
+	if(is.null(geneIndices)) geneIndices=1:nrow(data)
 	
 	temp <- data[geneIndices, sampleIndices]
 	if(model==1)

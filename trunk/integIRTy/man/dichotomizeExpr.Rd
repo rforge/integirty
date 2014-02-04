@@ -8,7 +8,8 @@ Dichotomize the expression data given both tumor and normal samples.
 This function implements the  z-like metric described in the paper.
 }
 \usage{
-dichotomizeExpr(expr, exprCtr, refUseMean = FALSE, BIthr = NULL, tau1 = -2.5, tau2 = 2.5, parallel = FALSE)
+dichotomizeExpr(expr, exprCtr, refUseMean = FALSE, BIthr = NULL,
+                tau1 = -2.5, tau2 = 2.5, parallel = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -51,7 +52,7 @@ Tong, P. and Coombes, K. R. (2012). integIRTy: a method to identify altered gene
 multiple mechanisms of regulation using item response theory. Bioinformatics, submitted.
 }
 \author{
-Pan Tong (nickytong@gmail.com), Kevin R Coombes (kcoombes@mdanderson.org)
+Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 }
 
 

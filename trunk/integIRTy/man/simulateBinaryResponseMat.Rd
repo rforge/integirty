@@ -34,7 +34,7 @@ A matrix of 0's and 1's where rows are genes (examinees) and columns are samples
 
 
 \author{
-Pan Tong (nickytong@gmail.com), Kevin R Coombes (kcoombes@mdanderson.org)
+Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 }
 
 
