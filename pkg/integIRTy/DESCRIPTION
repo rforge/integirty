@@ -16,4 +16,4 @@ Description: This package provides a systematic framework for
 License: GPL (>= 2)
 Depends: ltm, foreach, doSNOW
 Imports: mclust, MASS, abind
-Suggests: KernSmooth
+Suggests: KernSmooth, OvarianData

@@ -70,7 +70,7 @@ We will present a simple example to illustrate how to use
 function. The usage of \texttt{intIRTeasyRun} is similar.  Later, we
 will break down the procedures step by step.
 
-As usual, the first step is to koad the package from the library.
+As usual, the first step is to load the package from the library.
 <<loadLibrary>>=
 library(integIRTy)
 @ 
@@ -79,6 +79,7 @@ along with the \texttt{integIRTy} package).  We use trhe \texttt{data}
 function to load expression, methylation, and copy number data for both
 tumor and normal samples. 
 <<loadData>>=
+library(OvarianData)
 data(OV)
 ls()
 @ 
