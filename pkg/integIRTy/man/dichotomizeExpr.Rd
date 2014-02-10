@@ -62,6 +62,7 @@ Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 \code{\link{dichotomizeCN}, \link{dichotomizeMethy}, \link{dichotomize}}
 }
 \examples{
+require(OvarianData)
 data(OV)
 binDat <- dichotomizeExpr(Expr_T[1:200, ], Expr_N[1:200, ])
 #binDat <- dichotomizeExpr(Expr_T[1:200, ], Expr_N[1:200, ], parallel=TRUE)
