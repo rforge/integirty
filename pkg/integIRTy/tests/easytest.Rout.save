@@ -26,6 +26,7 @@ Loading required package: foreach
 Loading required package: doSNOW
 Loading required package: iterators
 Loading required package: snow
+> library(OvarianData)
 > library(doSNOW)
 > registerDoSNOW(makeCluster(3, type = "SOCK"))
 > # getDoParWorkers()
@@ -37,4 +38,4 @@ Loading required package: snow
 > 
 > proc.time()
    user  system elapsed 
-   2.29    0.14    3.02 
+   3.19    0.18    4.40 

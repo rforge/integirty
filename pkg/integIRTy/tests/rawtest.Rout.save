@@ -26,6 +26,7 @@ Loading required package: foreach
 Loading required package: doSNOW
 Loading required package: iterators
 Loading required package: snow
+> library(OvarianData)
 > data(OV)
 > ll <- list(CN_N, Expr_N, Methy_N)
 > pp <- list(CN_T, Expr_T, Methy_T)
@@ -33,4 +34,4 @@ Loading required package: snow
 > 
 > proc.time()
    user  system elapsed 
-   2.37    0.04    2.40 
+   3.22    0.12    3.36 
