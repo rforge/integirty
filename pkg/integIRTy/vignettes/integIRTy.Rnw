@@ -1,5 +1,5 @@
 %\VignetteIndexEntry{integIRTy Vignette}
-%\VignetteDepends{ltm, foreach, doSNOW, mclust, MASS, abind}
+%\VignetteDepends{ltm, foreach, doParallel, mclust, MASS, abind}
 %\VignetteKeywords{integIRTy}
 %\VignettePackage{integIRTy}
 
@@ -79,7 +79,7 @@ along with the \texttt{integIRTy} package).  We use trhe \texttt{data}
 function to load expression, methylation, and copy number data for both
 tumor and normal samples. 
 <<loadData>>=
-library(OvarianData)
+#library(OvarianData)
 data(OV)
 ls()
 @ 
@@ -292,7 +292,7 @@ runFromBinary <- intIRTeasyRun(platforms=list(binDat_expr,
 \section{Parallelizing \texttt{integIRTy}}
 We add an option for parallel computing to speed up the computation.
 Parallel computing uses \texttt{foreach} as the backend while workers
-are requested by \texttt{doSNOW}.  The parallelism can happen when
+are requested by \texttt{doParallel}.  The parallelism can happen when
 fitting serveral IRT models (due to multiple assay types to integrate)
 or estimating the latent traits or performing permutation to assess
 statistical significance.
@@ -321,9 +321,9 @@ following code requests 3 workers through SOCK:
 
 <<>>=
 if(notwin) {
-    library(doSNOW)
+    library(doParallel)
     cl <- makeCluster(3, type = "SOCK")
-    registerDoSNOW(cl)
+    registerDoParallel(cl)
     }
 @ 
 
@@ -335,7 +335,7 @@ can request more workers as:
 
 <<register,eval=FALSE>>=
 # not run to allow vignette to complete more quickly
-registerDoSNOW(makeCluster(30, type = "MPI"))
+registerDoParallel(makeCluster(30))
 @ 
 
 Usually it's not a good practice to request the master nodes on the
@@ -368,22 +368,8 @@ getwd()
 sessionInfo()
 @ 
 
-%\bibliographystyle{natbib}
-%\bibliography{integIRTy}
-\begin{thebibliography}{}
 
-\bibitem[{The Cancer Genome Atlas Research Network}(2011){The Cancer Genome
-  Atlas Research Network}]{TCGAov}
-{The Cancer Genome Atlas Research Network} (2011).
-\newblock Integrated genomic analysis of ovarian carcinoma.
-\newblock {\em Nature\/}, {\bf 474}, 609--615.
-
-\bibitem[Tong and Coombes(2012)Tong and Coombes]{integIRTy}
-Tong, P. and Coombes, K.~R. (2012).
-\newblock integIRTy: a method to identify altered genes in cancer accounting
-  for multiple mechanisms of regulation using item response theory.
-\newblock {\em Bioinformatics, submitted\/}.
-
-\end{thebibliography}
+\bibliographystyle{plainnat}
+\bibliography{integIRTy}
 
 \end{document}

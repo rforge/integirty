@@ -1,6 +1,6 @@
 import(ltm)
 import(foreach)
-import(doSNOW)
+import(doParallel)
 import(mclust)
 import(MASS)
 import(abind)

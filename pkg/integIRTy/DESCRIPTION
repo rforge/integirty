@@ -14,6 +14,6 @@ Description: This package provides a systematic framework for
  automatically adjusted so that the overall alteration magnitude can
  be accurately inferred.
 License: GPL (>= 2)
-Depends: ltm, foreach, doSNOW
+Depends: ltm, foreach, doParallel
 Imports: mclust, MASS, abind
-Suggests: KernSmooth, OvarianData
+Suggests: KernSmooth
