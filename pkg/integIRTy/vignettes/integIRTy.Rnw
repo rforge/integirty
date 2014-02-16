@@ -79,7 +79,6 @@ along with the \texttt{integIRTy} package).  We use trhe \texttt{data}
 function to load expression, methylation, and copy number data for both
 tumor and normal samples. 
 <<loadData>>=
-#library(OvarianData)
 data(OV)
 ls()
 @ 

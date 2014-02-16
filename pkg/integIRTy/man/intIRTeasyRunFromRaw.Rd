@@ -92,7 +92,6 @@ Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 \code{\link{intIRTeasyRun}, \link{fitOnSinglePlat}, \link{calculatePermutedScoreByGeneSampling}}
 }
 \examples{
-require(OvarianData)
 data(OV)
 # 
 controlList <- list(Expr_N, Methy_N, CN_N)

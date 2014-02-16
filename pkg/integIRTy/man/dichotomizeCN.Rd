@@ -47,7 +47,6 @@ Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 }
 }
 \examples{
-require(OvarianData)
 data(OV)
 binDat <- dichotomizeCN(CN_T[1:20, ], CN_N[1:20, ])
 binDat[15:20, 1:2]

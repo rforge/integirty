@@ -1,5 +1,7 @@
 Package: integIRTy
 Type: Package
+LazyLoad: yes
+LazyData: true
 Title: Integrating Multiple Modalities of High Throughput Assays Using
   Item Response Theory 
 Version: 0.9.5

@@ -43,7 +43,6 @@ Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
 \code{\link{dichotomizeCN}, \link{dichotomizeExpr}, \link{dichotomize}}
 }
 \examples{
-require(OvarianData)
 data(OV)
 binDat <- dichotomizeMethy(Methy_T[1:200, ], Methy_N[1:200, ])
 binDat[15:20, 1:2]
