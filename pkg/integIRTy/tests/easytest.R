@@ -1,6 +1,6 @@
 library(integIRTy)
-library(doParallel)
-registerDoParallel(makeCluster(3, type = "SOCK"))
+#library(doParallel)
+#registerDoParallel(makeCluster(3, type = "SOCK"))
 # getDoParWorkers()
 data(OV)
 ll <- list(CN_N, Expr_N, Methy_N)
