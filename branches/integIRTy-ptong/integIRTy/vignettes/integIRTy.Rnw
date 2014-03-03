@@ -1,0 +1,384 @@
+%\VignetteIndexEntry{integIRTy Vignette}
+%\VignetteDepends{ltm, foreach, doParallel, mclust, MASS, abind}
+%\VignetteKeywords{integIRTy}
+%\VignettePackage{integIRTy}
+
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{natbib}
+
+\pagestyle{myheadings}
+\markright{Pan Tong}
+
+\setlength{\topmargin}{0in}
+\setlength{\textheight}{8in}
+\setlength{\textwidth}{6.5in}
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{integIRTy: a method to identify altered genes in cancer
+  accounting for multiple mechanisms of regulation using Item Response
+  Theory} 
+\author{Pan Tong and Kevin R Coombes}
+\date{\today}
+
+\usepackage{Sweave}
+\begin{document}
+
+\SweaveOpts{prefix.string=integIRTy}
+
+\maketitle
+
+\tableofcontents
+\listoffigures
+\listoftables
+
+<<echo=FALSE>>=
+options(width=80)
+options(continue=' ')
+@ 
+
+\section{Introduction}
+\texttt{integIRTy} is an R package that integrates multiple modalities
+of high throughput assays using Item Response Theory (IRT)
+\citep{integIRTy}. The goal is to identify genes that are altered in
+cancer either marginally in individual assay or jointly across
+different assays.  \texttt{integIRTy} is able to systematically
+integrate across assay types while automatically adjusting for the
+heterogeneity among different platforms and different samples.  When
+applied to a single assay, \texttt{integIRTy} is more robust and
+reliable than conventional methods such as student's t-test or
+Wilcoxon rank-sum test. When applied to integrate multiple assays,
+\texttt{integIRTy} can identify novel altered genes that cannot be
+found by looking at individual assays separately.
+
+\section{A Quick Example}
+\texttt{integIRTy} provides two top-level interfaces to the user. One
+is \texttt{intIRTeasyRun}, which accepts dichotomized matrices
+prepared by the user; the other is \texttt{intIRTeasyRunFromRaw},
+which accepts original data and uses the dichotomization methods
+proposed in \citep{integIRTy} to transform the data.  Both interfaces
+perform a series of computations: fitting IRT models in individual
+assays, estimating latent traits from individual assay, inferring
+latent traits from integrated data, and performing permutations to
+assess statistical significance.
+
+We will present a simple example to illustrate how to use
+\texttt{integIRTy}. We begin with the \texttt{intIRTeasyRunFromRaw}
+function. The usage of \texttt{intIRTeasyRun} is similar.  Later, we
+will break down the procedures step by step.
+
+As usual, the first step is to load the package from the library.
+<<loadLibrary>>=
+library(integIRTy)
+@ 
+We use a subset of TCGA ovarian cancer data ~\citep{TCGAov} (shipped
+along with the \texttt{integIRTy} package).  We use trhe \texttt{data}
+function to load expression, methylation, and copy number data for both
+tumor and normal samples. 
+<<loadData>>=
+data(OV)
+ls()
+@ 
+
+The \texttt{intIRTeasyRunFromRaw} function requires two lists of
+matrices corresponding to tumor and normal samples. The lists must
+contain data from matching assays in the same order.  The rows of each
+matrix should also be in the same order, corresponding to the same set
+of genes. The two lists are prepared below.
+<<lists>>=
+controlList <- list(Expr_N, Methy_N, CN_N)
+tumorList <- list(Expr_T, Methy_T, CN_T)
+@ 
+
+To avoid repeated computation, we define a function that detects if an
+object is already present:
+<<testObject>>=
+testObject <- function(object) {
+  exists(as.character(substitute(object)))
+}
+@ 
+
+Now we can call \texttt{intIRTeasyRunFromRaw} to integrate the
+data. Note that the assay type is specified in the order of the two
+lists so that the program can choose the right dichotomization
+methods. We also add gene sampling for significance assessment.
+
+<<runFromRaw>>=
+if(!testObject(runFromRaw)) {
+  runFromRaw <- intIRTeasyRunFromRaw(platforms=tumorList, 
+                                     platformsCtr=controlList, 
+                                     assayType=c("Expr", "Methy", "CN"), 
+                                     permutationMethod="gene sampling")
+}
+class(runFromRaw)
+attributes(runFromRaw)
+@ 
+	
+\texttt{intIRTeasyRunFromRaw} returns a list of the following
+elements:
+\begin{itemize}
+\item \texttt{fits}: a list of model fits for each platform as returned by
+  \texttt{fitOnSinglePlat} function; specifically, these include
+  \begin{itemize}
+  \item \texttt{fit}: An object returned by calling ltm package. Item parameters and 
+  other auxillary inforamtion (i.e. loglikelihood, convergence, Hessian) can be accessed 
+  from this object. For more details, please refer to ltm package	
+  \item \texttt{model}: The model type
+  \item \texttt{guessing}: The guessing parameter
+  \item \texttt{sampleIndices}: The sample indices used in the model
+  \item \texttt{geneIndices}: The gene indices used in the model   
+  \end{itemize}
+\item \texttt{estimatedScoreMat}: A matrix of estimated latent
+  traits. The first several columns correspond to the individual
+  assays; the last column represents the integrated latent trait with
+  all data.
+\item \texttt{permutedScoreMat}: A matrix of latent trait estimates
+  after permuting the binary matrix within columns. This is only
+  available if addPermutedScore is set to TRUE. The first several
+  columns correspond to the individual assays; the last column
+  represents the integrated data. 
+\item \texttt{dscrmnList}: A list of discrimination parameters. Each
+    element contains all of the discrimination parameters as a vector
+    for each assay. The last element contains the discrimination
+    parameters for the integrated data which is formed by combining
+    discrimination parameters from each assay sequentially.
+  \item \texttt{dffcltList}: Same format as dscrmnList except it
+    contains difficulty parameter.
+  \item \texttt{gussngList}: Same format as dscrmnList except it
+    contains guessing parameter. Be default, this is just all 0's.
+\item \texttt{permutedScoreMatWithLabelPerm}: A matrix of latent trait 
+	estimates using sample label permutation. This is only available if
+	permutationMethod=`sample label permutation' is used. The first several 
+	columns correspond to the individual assays; the last column represents 
+	the integrated data.
+\end{itemize}
+
+Below, we just extract the estimated latent traits for each assay and
+visualize them by matrix plot. The upper diagonal panels show the
+pairwise smoothed scatter where dark clouds indicate the density. The
+lower panels show the correlation of the latent traits.
+
+<<echo=FALSE>>=
+panel.hist <- function(x, ...) {
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(usr[1:2], 0, 1.5) )
+  h <- hist(x, breaks=50, plot = FALSE)
+  breaks <- h$breaks; nB <- length(breaks)
+  y <- h$counts; y <- y/max(y)
+  rect(breaks[-nB], 0, breaks[-1], y, col="cyan", ...)
+}
+
+panel.cor <- function(x, y, digits=2, prefix="", cex.cor) {
+  usr <- par("usr"); on.exit(par(usr))
+  par(usr = c(0, 1, 0, 1))
+  r <- abs(cor(x, y, use='complete.obs'))
+  txt <- format(c(r, 0.123456789), digits=digits)[1]
+  txt <- paste(prefix, txt, sep="")
+  if(missing(cex.cor)) cex <- 0.6/strwidth(txt)
+  text(0.5, 0.5, txt, cex = cex)
+}
+panel.smooth <- function(...){
+  par(new=TRUE);
+  smoothScatter(...)
+  abline(0, 1, col=2, lty=2)
+}
+@ 
+
+<<MatrixScatter, fig=TRUE>>=
+runFromRaw_ScoreMat <- runFromRaw$estimatedScoreMat
+pairs(runFromRaw_ScoreMat, lower.panel=panel.cor, upper.panel=panel.smooth,
+        labels=c('Expression', 'Methylation', 'Copy \n Number', 'Integrated'),
+        cex.labels=1.2, gap=1.7)
+@ 
+
+\section{Building The Pipeline Step By Step}
+Usually the \texttt{intIRTeasyRunFromRaw} function is enough for most
+applications. In case of assays rather than expression, methylation
+and copy number is present, the user might need to build the pipeline
+themselves. Also, we allow the user to define their own
+dichotomization methods.  Below we show step by step how to build the
+pipeline for data integration.
+
+\subsection{Data Dichotomization}
+We implement 3 dichotomization methods proposed in \citep{integIRTy}.
+The dichotomize() function is a wrapper for each method. Many options
+can be specified. For details, please refer to the package
+documentation.
+
+<<DataDichotomization>>=
+if(!testObject(binDat_CN)){
+  binDat_expr <- dichotomize(Expr_T, Expr_N, assayType='Expr')
+  binDat_methy <- dichotomize(Methy_T, Methy_N, assayType='Methy')
+  binDat_CN <- dichotomize(CN_T, CN_N, assayType='CN')
+}
+@ 
+
+\subsection{Fit IRT Model On Each Assay}
+With dichotomized data, we can fit an IRT model on each assay.  Three
+IRT models are implemented: the Rasch model where all item
+discrination are set to 1; the constrained 2PL model where all item
+discrimation are set to be equal but not necessarily 1; the 2PL model
+where no constraint is put on the item difficulty and discrimination
+parameter. By default, the 2PL model will be used.
+
+<<FitOnSingleAssay>>=
+if(!testObject(fit2PL_CN)){
+  fit2PL_Expr <- fitOnSinglePlat(binDat_expr, model=3)
+  fit2PL_Methy <- fitOnSinglePlat(binDat_methy, model=3)
+  fit2PL_CN <- fitOnSinglePlat(binDat_CN, model=3)
+}
+@ 
+
+\subsection{Estimating Latent Traits}
+Result returned by fitOnSinglePlat() contains item parameters, which can be used to estimate the latent traits
+through the computeAbility() function. 
+
+First we extract the item parameters:
+<<>>=
+dffclt_expr <- coef(fit2PL_Expr$fit)[, 'Dffclt']
+dscrmn_expr <- coef(fit2PL_Expr$fit)[, 'Dscrmn']
+dffclt_methy <- coef(fit2PL_Methy$fit)[, 'Dffclt']
+dscrmn_methy <- coef(fit2PL_Methy$fit)[, 'Dscrmn']
+dffclt_CN <- coef(fit2PL_CN$fit)[, 'Dffclt']
+dscrmn_CN <- coef(fit2PL_CN$fit)[, 'Dscrmn']
+@ 
+
+Then, latent traits from each assay can be estimated separately.
+
+<<LatentTraitEstimation>>=
+if(!testObject(score_expr)){
+  score_expr <- computeAbility(binDat_expr, dscrmn=dscrmn_expr, 
+                               dffclt=dffclt_expr)
+  score_methy <- computeAbility(binDat_methy, dscrmn=dscrmn_methy, 
+                                dffclt=dffclt_methy)
+  score_CN <- computeAbility(binDat_CN, dscrmn=dscrmn_CN, 
+                             dffclt=dffclt_CN)
+}
+@ 
+
+\subsection{The Integrated Latent Trait}
+The integrated latent trait can be estimated similarby by combining
+the items into a larger test:
+
+<<integratedLatentTrait>>=
+if(!testObject(score_integrated)){
+  score_integrated <- computeAbility(respMat=cbind(binDat_expr, 
+                                       binDat_methy, binDat_CN), 
+                                     dscrmn=c(dscrmn_expr, dscrmn_methy, dscrmn_CN), 
+                                     dffclt=c(dffclt_expr, dffclt_methy, dffclt_CN))
+}
+@ 
+
+By building the pipeline step by step, we get the same result as using
+the intIRTeasyRunFromRaw() function:
+<<>>=
+all(score_integrated==runFromRaw_ScoreMat[, 4])
+@ 
+
+\subsection{The intIRTeasyRun() Function}
+The intIRTeasyRun() function is a pipeline for binary input.  It can
+be used as follows:
+
+<<easy,eval=FALSE>>=
+# not run to allow vignette to complete more quickly
+runFromBinary <- intIRTeasyRun(platforms=list(binDat_expr, 
+                                 binDat_methy, binDat_CN))
+@ 
+
+\section{Parallelizing \texttt{integIRTy}}
+We add an option for parallel computing to speed up the computation.
+Parallel computing uses \texttt{foreach} as the backend while workers
+are requested by \texttt{doParallel}.  The parallelism can happen when
+fitting serveral IRT models (due to multiple assay types to integrate)
+or estimating the latent traits or performing permutation to assess
+statistical significance.
+
+%% parallel is disabled to pass R Forge check
+%Note that, although the parallel code works fine on Windows after the
+%program is installed, it causes an error when checking the package on
+%Windows.  As a result, we disable this section of te code if running
+%on Windows.
+%<<notWin>>=
+%notwin <- .Platform$OS != "windows"
+%@ 
+
+The following functions can be paralleled which can be controlled by
+the \textit{parallel} option: intIRTeasyRun(), intIRTeasyRunFromRaw(),
+calculatePermutedScoreByGeneSampling(), computeAbility() and
+dichotomizeExpr().
+
+Enabling parallelism is quite simple for the user. The first step
+involves requesting workers. The second step is to set the option
+\textit{parallel} to TRUE in a specified function. By default, all
+parallel options are set to be FALSE.
+
+Several cluster types can be requested including MPI, SOCK, PVM and
+NWS. For example, on a windows machine with multiple cores, the
+following code requests 3 workers through SOCK:
+
+%
+% parallel is commented out so that we can pass R-Forge check due to snow package is not installed on the server
+%
+\begin{verbatim}
+    library(doParallel)
+    cl <- makeCluster(3, type = "SOCK")
+    registerDoParallel(cl)
+\end{verbatim}
+
+
+Note that the above command also works on Linux servers. However, it
+requests master nodes when run within R.
+
+For Linux servers, especially linux clusters with MPI installed, we
+can request more workers as:
+
+%<<register,eval=FALSE>>=
+%# not run to allow vignette to complete more quickly
+\begin{verbatim}
+    registerDoParallel(makeCluster(30))
+\end{verbatim}
+
+%@ 
+
+Usually it's not a good practice to request the master nodes on the
+cluster. To avoid this, one can use qsub command to submit a PBS job
+using the R script written without further modification.
+
+We proceed with the 3 nodes requested and call the intIRTeasyRun() to
+illustrate how to use the parallel computing:
+
+%<<parallelExample>>=
+%if(notwin) {
+\begin{verbatim}
+    runFromBinary <- intIRTeasyRun(platforms=list(binDat_expr, 
+                                       binDat_methy, binDat_CN),
+                                   addPermutedScore=TRUE, parallel=TRUE)
+\end{verbatim}
+%}
+%@ 
+
+Now we close the connection to the workers.
+
+%<<>>=
+%if(notwin) {
+\begin{verbatim}
+    stopCluster(cl)
+\end{verbatim}
+%    }
+%@
+
+
+\section{File Location and Session Info}
+<<sessionInfo>>=
+getwd()
+sessionInfo()
+@ 
+
+
+\bibliographystyle{plainnat}
+\bibliography{integIRTy}
+
+\end{document}
