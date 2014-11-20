@@ -1,6 +1,6 @@
 
-R version 3.0.2 (2013-09-25) -- "Frisbee Sailing"
-Copyright (C) 2013 The R Foundation for Statistical Computing
+R version 3.1.0 (2014-04-10) -- "Spring Dance"
+Copyright (C) 2014 The R Foundation for Statistical Computing
 Platform: x86_64-w64-mingw32/x64 (64-bit)
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
@@ -23,12 +23,11 @@ Loading required package: polycor
 Loading required package: mvtnorm
 Loading required package: sfsmisc
 Loading required package: foreach
-Loading required package: doSNOW
+Loading required package: doParallel
 Loading required package: iterators
-Loading required package: snow
-> library(OvarianData)
-> library(doSNOW)
-> registerDoSNOW(makeCluster(3, type = "SOCK"))
+Loading required package: parallel
+> #library(doParallel)
+> #registerDoParallel(makeCluster(3, type = "SOCK"))
 > # getDoParWorkers()
 > data(OV)
 > ll <- list(CN_N, Expr_N, Methy_N)
@@ -38,4 +37,4 @@ Loading required package: snow
 > 
 > proc.time()
    user  system elapsed 
-   3.19    0.18    4.40 
+   3.02    0.28    3.29 
