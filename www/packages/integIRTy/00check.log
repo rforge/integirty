@@ -1,0 +1,98 @@
+* using log directory 'C:/Users/Kevin/Desktop/RForge/integirty/pkg/integIRTy.Rcheck'
+* using R version 3.4.0 (2017-04-21)
+* using platform: x86_64-w64-mingw32 (64-bit)
+* using session charset: ISO8859-1
+* using option '--as-cran'
+* checking for file 'integIRTy/DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'integIRTy' version '1.0.0'
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Pan Tong <nickytong@gmail.com>'
+
+New submission
+
+The Description field should not start with the package name,
+  'This package' or similar.
+
+The Date field is over a month old.
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking whether package 'integIRTy' can be installed ... OK
+* checking installed package size ... OK
+* checking package directory ... OK
+* checking 'build' directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking R files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking use of S3 registration ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+calculatePermutedScoreByGeneSampling: no visible global function
+  definition for 'rbinom'
+calculatePermutedScoreByGeneSampling: no visible binding for global
+  variable 'i'
+computeAbility: no visible binding for global variable 'i'
+dichotomizeExpr: no visible binding for global variable 'i'
+dichotomizeExpr: no visible binding for global variable 'median'
+dichotomizeExpr: no visible binding for global variable 'sd'
+dichotomizeMethy: no visible binding for global variable 'median'
+intIRTeasyRun: no visible binding for global variable 'plat'
+intIRTeasyRun: no visible global function definition for 'coef'
+intIRTeasyRun: no visible binding for global variable 'i'
+intIRTeasyRun : tempf: no visible global function definition for 'coef'
+intIRTeasyRunFromRaw: no visible binding for global variable 'i'
+intIRTeasyRunFromRaw : sampleLabelPermFunc: no visible binding for
+  global variable 'plat'
+simulateBinaryResponseMat: no visible global function definition for
+  'rbinom'
+thetaEst: no visible global function definition for 'uniroot'
+Undefined global functions or variables:
+  coef i median plat rbinom sd uniroot
+Consider adding
+  importFrom("stats", "coef", "median", "rbinom", "sd", "uniroot")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd line widths ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... OK
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of 'data' directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking sizes of PDF files under 'inst/doc' ... OK
+* checking installed files from 'inst/doc' ... OK
+* checking files in 'vignettes' ... OK
+* checking examples ... OK
+* checking for unstated dependencies in 'tests' ... OK
+* checking tests ... OK
+  Running 'easytest.R'
+  Comparing 'easytest.Rout' to 'easytest.Rout.save' ... OK
+  Running 'rawtest.R'
+  Comparing 'rawtest.Rout' to 'rawtest.Rout.save' ... OK
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes in 'inst/doc' ... OK
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... OK
+* DONE
+Status: 2 NOTEs
