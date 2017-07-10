@@ -5,15 +5,18 @@ import(mclust)
 import(MASS)
 import(abind)
 
+importFrom("stats",
+           "rbinom", "coef", "median", "sd", "uniroot")
+
 export(fitOnSinglePlat,
-computeAbility,
-intIRTeasyRun,
-calculatePermutedScoreByGeneSampling,
-simulateBinaryResponseMat,
-dichotomize,
-dichotomizeExpr,
-dichotomizeMethy,
-dichotomizeCN,
-intIRTeasyRunFromRaw
+       computeAbility,
+       intIRTeasyRun,
+       calculatePermutedScoreByGeneSampling,
+       simulateBinaryResponseMat,
+       dichotomize,
+       dichotomizeExpr,
+       dichotomizeMethy,
+       dichotomizeCN,
+       intIRTeasyRunFromRaw
 )
 

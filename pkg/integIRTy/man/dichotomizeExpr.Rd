@@ -48,8 +48,10 @@ operation.
 A binary matrix of the same dimension of input expr. Missing values will be propogated into binary matrix.
 }
 \references{
-Tong, P. and Coombes, K. R. (2012). integIRTy: a method to identify altered genes in cancer accounting for
-multiple mechanisms of regulation using item response theory. Bioinformatics, submitted.
+  Tong P, Coombes KR. \emph{integIRTy: a method to identify altered
+    genes in cancer accounting for multiple mechanisms of regulation
+    using item response theory}. Bioinformatics, 2012 Nov 15;
+  28(22):2861--9.  
 }
 \author{
 Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)

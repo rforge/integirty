@@ -37,7 +37,7 @@ A vector of latent trait estimates for each examinee.
 }
 \references{
 David Magis, Gilles Raiche (2012). Random Generation of Response Patterns under Computerized Adaptive Testing with the 
-R Package catR. Journal of Statistical Software, 48(8), 1-31. URL http://www.jstatsoft.org/v48/i08/.
+R Package catR. Journal of Statistical Software, 48(8), 1-31. 
 }
 \author{
 Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)

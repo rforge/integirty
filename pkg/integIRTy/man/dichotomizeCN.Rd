@@ -32,8 +32,10 @@ The upper bound for log2Ratio when converting to a code as 0. Log2ratio between 
 Returns a binary matrix of the same dimension. Missing value would be propogated into the binary matrix.
 }
 \references{
-Tong, P. and Coombes, K. R. (2012). integIRTy: a method to identify altered genes in cancer accounting for
-multiple mechanisms of regulation using item response theory. Bioinformatics, submitted.
+  Tong P, Coombes KR. \emph{integIRTy: a method to identify altered
+    genes in cancer accounting for multiple mechanisms of regulation
+    using item response theory}. Bioinformatics, 2012 Nov 15;
+  28(22):2861--9.  
 }
 \author{
 Pan Tong (nickytong@gmail.com), Kevin R Coombes (krc@silicovore.com)
