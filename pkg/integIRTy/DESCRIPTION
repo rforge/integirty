@@ -3,10 +3,10 @@ Type: Package
 LazyData: true
 Title: Integrating Multiple Modalities of High Throughput Assays Using
   Item Response Theory 
-Version: 1.0.1
+Version: 1.0.2
 Date: 2017-07-10
 Author: Pan Tong, Kevin R Coombes
-Maintainer: Pan Tong <nickytong@gmail.com>
+Maintainer: Kevin R. Coombes <krc@silicovore.com>
 Description: Provides a systematic framework for
  integrating multiple modalities of assays profiled on the same set of
  samples. The goal is to identify genes that are altered in cancer
