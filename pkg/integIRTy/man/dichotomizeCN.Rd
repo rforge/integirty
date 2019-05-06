@@ -54,3 +54,4 @@ binDat <- dichotomizeCN(CN_T[1:20, ], CN_N[1:20, ])
 binDat[15:20, 1:2]
 }
 
+\keyword{manip}
